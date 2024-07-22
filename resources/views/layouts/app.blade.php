@@ -25,7 +25,12 @@
 
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-        @include('layouts.navigation')
+        <!-- Conditionally include the correct navigation -->
+        @if (Auth::user()->hasRole('admin'))
+            @include('layouts.navigation')
+        @elseif (Auth::user()->hasRole('user'))
+            @include('user.layout.navigation')
+        @endif
 
         <!-- Page Heading -->
         @if (isset($header))
@@ -56,9 +61,6 @@
         @if ($errors->any())
             @foreach ($errors->all() as $error)
                 toastr.error("{{ $error }}")
-                // @php
-                    //     toastr()->error($error);
-                    //@endphp
             @endforeach
         @endif
     </script>
@@ -66,11 +68,8 @@
         .action-buttons {
             display: flex;
             flex-direction: row;
-            /* Align buttons horizontally */
             justify-content: center;
-            /* Center buttons in the cell */
             align-items: center;
-            /* Center buttons vertically */
             margin: 1px
         }
     </style>

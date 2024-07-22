@@ -26,7 +26,7 @@
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <div class="bg-gray-800 p-5 rounded-lg">
+                        <div class="bg-gray-800 p-6 rounded-lg">
 
                             <!-- Title -->
                             <div class="mb-4">
@@ -42,9 +42,12 @@
                             <div class="mb-4">
                                 <x-input-label for="description" :value="__('Description')" />
                                 <x-rich-text-editor id="description" name="description"
-                                    class="mt-1 block w-full bg-gray-700 text-white border-gray-600 dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700">{{ old('description', $service->description) }}</x-rich-text-editor>
+                                    class="mt-1 block w-full bg-gray-700 text-white border-gray-600 dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700">
+                                    {!! old('description', $service->description) !!}
+                                </x-rich-text-editor>
                                 <x-input-error class="mt-2" :messages="$errors->get('description')" />
                             </div>
+
 
                             <!-- Working Hours -->
                             <div class="mb-4">
@@ -69,15 +72,18 @@
                                 <input id="image" name="image" type="file"
                                     class="mt-1 block w-full bg-gray-700 text-white border-gray-600 dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700" />
                                 <x-input-error class="mt-2" :messages="$errors->get('image')" />
-                                @if ($room->image)
-                                    <img src="{{ asset('uploads/room_images/' . $room->image) }}" alt="Room Image"
-                                        class="mt-2 w-32 h-32 object-cover">
+                                @if ($service->image)
+                                    <div class="mt-4">
+                                        <img src="{{ asset('uploads/services_images/' . $service->image) }}"
+                                            alt="Service Image" class="w-32 h-32 object-cover">
+                                    </div>
                                 @endif
                             </div>
-
-
-                            <!-- Submit Button -->
-                            <x-submit-button value="Update Service" />
+                            <div class="flex items-center justify-end mt-4">
+                                <x-primary-button class="ml-4">
+                                    {{ __('Save') }}
+                                </x-primary-button>
+                            </div>
                         </div>
                     </form>
                 </div>

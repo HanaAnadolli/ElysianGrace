@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\RoomController;
 use App\Http\Controllers\Api\ServiceController;
-
+use App\Http\Controllers\Api\ContactController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,3 +25,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('rooms', [RoomController::class, 'index']);
 Route::get('/room_details/{id}', [RoomController::class, 'show']);
 Route::get('services', [ServiceController::class, 'index']);
+Route::post('contact_forms', [ContactController::class, 'store']);

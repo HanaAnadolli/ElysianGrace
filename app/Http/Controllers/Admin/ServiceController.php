@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\DataTables\ServiceDataTable;
 use App\Models\Service;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
@@ -91,19 +93,19 @@ class ServiceController extends Controller
                 'description' => 'nullable|string',
                 'working_hours' => 'nullable|string',
                 'rules' => 'nullable|string',
-                'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048', // Image validation
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Image validation
             ]);
     
             // Handle the image upload
             if ($request->hasFile('image')) {
-                // Delete the old image if exists
-                if ($service->image) {
+                // Delete the old image if it exists
+                if ($service->image && $service->image != 'default_image.jpg') {
                     Storage::delete('public/uploads/services_images/' . $service->image);
                 }
     
                 $image = $request->file('image');
                 $imageName = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-                $image->storeAs('public/uploads/services_images/', $imageName);
+                $image->move(public_path('uploads/services_images/'), $imageName);
                 $validatedData['image'] = $imageName;
             }
     
@@ -118,7 +120,7 @@ class ServiceController extends Controller
             return redirect()->back()->withInput()->withErrors([$e->getMessage()]);
         }
     }
-
+    
     /**
      * Remove the specified resource from storage.
      */

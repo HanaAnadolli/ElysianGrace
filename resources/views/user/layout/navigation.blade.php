@@ -1,7 +1,3 @@
-@php
-    $user = Auth::user();
-    $unreadCount = App\Models\ContactForm::where('is_read', 0)->count();
-@endphp
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -9,58 +5,17 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('user.dashboard') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('user.dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
-
-                {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('category.index')" :active="request()->routeIs('category.*')">
-                        {{ __('Category') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('comments.index')" :active="request()->routeIs('comments.*')">
-                        {{ __('Comments') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('slider.index')" :active="request()->routeIs('slider.*')">
-                        {{ __('Slider') }}
-                    </x-nav-link>
-                </div> --}}
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('rooms.index')" :active="request()->routeIs('roomss.*')">
-                        {{ __('Rooms') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('services.index')" :active="request()->routeIs('roomss.*')">
-                        {{ __('Services') }}
-                    </x-nav-link>
-                </div>
-                <!-- In your Blade view -->
-                <div class="relative hidden space-x-8 sm:-my-px sm:ml-10 sm:flex items-center">
-                    <x-nav-link :href="route('contact_forms.index')" :active="request()->routeIs('contact_forms.*')">
-                        {{ __('Contact') }}
-                        @if ($unreadCount > 0)
-                            <span class="unread-badge">
-                                {{ $unreadCount }}
-                            </span>
-                        @endif
-                    </x-nav-link>
-                </div>
-
-
-
-
             </div>
 
             <!-- Settings Dropdown -->
@@ -151,22 +106,3 @@
         </div>
     </div>
 </nav>
-
-
-<style>
-    /* Add this to your custom CSS file */
-    .unread-badge {
-        background-color: #dc2626;
-        color: #fff;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        font-size: 0.75rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        left: 100%;
-        top: 32%;
-    }
-</style>

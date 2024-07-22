@@ -16,11 +16,6 @@ class CheckRole
     public function handle(Request $request, Closure $next, ...$roles)
     {
         if (!auth()->check() || !in_array(auth()->user()->role, $roles)) {
-            // If user is not logged in or doesn't have the right role,
-            // redirect with a flash message.
-
-            // Flash a message to the session indicating lack of permissions.
-            // You can use the `->with()` method to flash data to the session.
             return redirect('/')->with('error', 'You do not have permission to access this page.');
         }
 
