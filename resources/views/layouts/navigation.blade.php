@@ -42,8 +42,13 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('services.index')" :active="request()->routeIs('roomss.*')">
+                    <x-nav-link :href="route('services.index')" :active="request()->routeIs('services.*')">
                         {{ __('Services') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('bookings.index')" :active="request()->routeIs('bookings.*')">
+                        {{ __('Booking') }}
                     </x-nav-link>
                 </div>
                 <!-- In your Blade view -->

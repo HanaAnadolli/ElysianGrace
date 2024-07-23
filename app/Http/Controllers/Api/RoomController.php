@@ -30,4 +30,11 @@ class RoomController extends Controller
 
         return response()->json($room);
     }
+
+    public function getRandomRooms()
+    {
+        // Example logic to fetch random rooms
+        $rooms = Room::inRandomOrder()->limit(3)->get();
+        return response()->json($rooms);
+    }
 }

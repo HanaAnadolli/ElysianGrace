@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\ContactFormController;
 use App\Http\Controllers\User\UserDashboardController;
 use Illuminate\Support\Facades\Route;
@@ -49,6 +50,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('rooms/change-status', [RoomController::class, 'changeStatus'])->name('rooms.change-status');
     Route::resource('services', ServiceController::class);
     Route::put('services/change-status', [ServiceController::class, 'changeStatus'])->name('services.change-status');
+    Route::resource('bookings', BookingController::class);
+    Route::post('/bookings/{id}/approve', [BookingController::class, 'approve'])->name('bookings.approve');
+    Route::post('/bookings/{id}/reject', [BookingController::class, 'reject'])->name('bookings.reject');
     Route::resource('contact_forms', ContactFormController::class);
     Route::patch('contact_forms/{id}/mark-as-read', [ContactFormController::class, 'markAsRead'])->name('contact_forms.markAsRead');
 });

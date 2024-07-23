@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\RoomController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\ContactController;
+use App\Http\Controllers\Api\BookingController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,5 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('rooms', [RoomController::class, 'index']);
 Route::get('/room_details/{id}', [RoomController::class, 'show']);
+Route::get('/random-room', [RoomController::class, 'getRandomRooms']);
 Route::get('services', [ServiceController::class, 'index']);
 Route::post('contact_forms', [ContactController::class, 'store']);
+Route::post('/book_room', [BookingController::class, 'store']);
