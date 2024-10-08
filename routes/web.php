@@ -10,7 +10,10 @@ use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\ContactFormController;
+use App\Http\Controllers\Admin\OfferController;
 use App\Http\Controllers\User\UserDashboardController;
+use App\Http\Controllers\User\UserBookingController;
+use App\Http\Controllers\User\UserNotificationsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,13 +58,16 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/bookings/{id}/reject', [BookingController::class, 'reject'])->name('bookings.reject');
     Route::resource('contact_forms', ContactFormController::class);
     Route::patch('contact_forms/{id}/mark-as-read', [ContactFormController::class, 'markAsRead'])->name('contact_forms.markAsRead');
+    Route::resource('offers', OfferController::class);
 });
 
 // User route group
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
-    // Add more user routes here if needed
+    Route::get('/user/bookings', [UserBookingController::class, 'index'])->name('user.bookings.index');
+    Route::get('/user/notification', [UserNotificationsController::class, 'notifications'])->name('user.notifications');
 });
+
 
 // Auth routes
 require __DIR__.'/auth.php';

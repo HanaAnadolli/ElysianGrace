@@ -9,32 +9,46 @@ use Illuminate\Http\JsonResponse;
 class RoomController extends Controller
 {
     /**
-     * Display a listing of the rooms.
+     * Display a listing of the available rooms.
      *
      * @return JsonResponse
      */
     public function index(): JsonResponse
     {
-        $rooms = Room::all();
+        // Fetch rooms where status is 'available'
+        $rooms = Room::where('status', 'available')->get();
 
         return response()->json($rooms);
     }
 
-    public function show($id)
+    /**
+     * Display the details of a specific room.
+     *
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function show($id): JsonResponse
     {
-        $room = Room::find($id);
+        // Fetch the room by ID and ensure it is available
+        $room = Room::where('id', $id)->where('status', 'available')->first();
 
         if (!$room) {
-            return response()->json(['message' => 'Room not found'], 404);
+            return response()->json(['message' => 'Room not found or not available'], 404);
         }
 
         return response()->json($room);
     }
 
-    public function getRandomRooms()
+    /**
+     * Display a list of random available rooms.
+     *
+     * @return JsonResponse
+     */
+    public function getRandomRooms(): JsonResponse
     {
-        // Example logic to fetch random rooms
-        $rooms = Room::inRandomOrder()->limit(3)->get();
+        // Fetch random rooms where status is 'available'
+        $rooms = Room::where('status', 'available')->inRandomOrder()->limit(3)->get();
+        
         return response()->json($rooms);
     }
 }

@@ -27,15 +27,20 @@ class BookingsDataTable extends DataTable
                 return $emailExists ? '<span class="text-green-600"><i class="fa fa-check"></i></span>' : '<span class="text-red-600"><i class="fa fa-times"></i></span>';
             })
             ->addColumn('action', function ($query) {
+                if ($query->status === 'approved' || $query->status === 'rejected') {
+                    return '<div class="btn-group"></div>';
+                }
+            
                 $approveBtn = '<button class="btn btn-success approve-booking" data-id="' . $query->id . '">
                                    <i class="fa fa-check"></i> Confirm
                                </button>';
                 $rejectBtn = '<button class="btn btn-danger reject-booking" data-id="' . $query->id . '">
-                                  <i class="fa fa-times"></i> Reject
-                              </button>';
+                                <i class="fa fa-times"></i> Reject
+                            </button>';
             
                 return '<div class="btn-group">' . $approveBtn . ' ' . $rejectBtn . '</div>';
-            })            
+            })
+                  
             ->editColumn('created_at', function ($query) {
                 return $query->created_at->format('Y-m-d H:i:s');
             })

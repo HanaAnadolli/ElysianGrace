@@ -19,26 +19,31 @@ class DashboardController extends Controller
         $userCount = User::where('role', 'user')->count();
         $contactCount = ContactForm::where('created_at', '>=', now()->subDay())->count(); // Contacts in last 24 hours
         $reservedRoomsCount = Room::where('status', 'reserved')->count();
-
+    
+        // Fetch available rooms
+        $availableRooms = Room::where('status', 'available')->get();
+    
         // Prepare monthly data
         $months = [];
         $userCounts = [];
-
+    
         for ($i = 1; $i <= 12; $i++) {
             $months[] = \Carbon\Carbon::create()->month($i)->format('F');
             $userCounts[] = User::whereYear('created_at', date('Y'))
                                 ->whereMonth('created_at', $i)
                                 ->count();
         }
-
-        return view('dashboard', [
+    
+        return view('admin.dashboard', [
             'userCount' => $userCount,
             'contactCount' => $contactCount,
             'reservedRoomsCount' => $reservedRoomsCount,
+            'availableRooms' => $availableRooms, // Pass available rooms to the view
             'months' => $months,
             'userCounts' => $userCounts,
         ]);
     }
+    
 
 
     

@@ -17,4 +17,9 @@ class Booking extends Model
         'comments',
         'status',
     ];
+
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
+    }
 }
